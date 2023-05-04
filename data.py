@@ -7,11 +7,6 @@ import torch
 import numpy as np
 import utils
 
-"""Optimization:
-    - Delete .tif in the csv files instead of split
-    - Find better key naming for lmdb
-    """
-
 class SegmentationDataset(data.Dataset):
         def __init__(self, db_path, split, n_channels = 3):
 
@@ -51,8 +46,8 @@ class SegmentationDataset(data.Dataset):
             if self.env is None:
                  self._init_db()
             filename = self.filenames[idx][0]
-            image = self.read_lmdb_image(filename.split('.')[0])
-            mask = self.read_lmdb_mask(filename[:-11] + '_Kumar-Roy' + filename[-11:].split('.')[0])
+            image = self.read_lmdb_image(filename)
+            mask = self.read_lmdb_mask(filename + '_mask')
             return image, mask
 
 def get_dataloader(db_path, n_channels, batch_size, split, num_workers = 0):
