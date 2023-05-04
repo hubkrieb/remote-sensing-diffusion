@@ -8,14 +8,14 @@ MAX_PIXEL_VALUE = 65535
 
 def get_img_arr(path, n_channels):
     if n_channels == 3:
-        img = rasterio.open(path).read((7,6,2)).transpose((1, 2, 0))
+        img = rasterio.open(path).read((7,6,2))
     elif n_channels == 10:
-        img = rasterio.open(path).read().transpose((1, 2, 0)) 
+        img = rasterio.open(path).read()
     img = np.float32(img) / MAX_PIXEL_VALUE 
     return torch.from_numpy(img)
 
 def get_mask_arr(path):
-    img = rasterio.open(path).read().transpose((1, 2, 0))
+    img = rasterio.open(path).read()
     seg = np.float32(img)
     return torch.from_numpy(seg)
 
@@ -38,8 +38,8 @@ def load_checkpoint(checkpoint_path, model, optimizer):
 def plot_prediction(model, image, mask, device):
 
     model = model.to(device)
-    image = image.permute(0, 3, 1, 2).to(device)
-    mask = mask.permute(0, 3, 1, 2).to(device)
+    image = image.to(device)
+    mask = mask.to(device)
     
     model.eval()
     with torch.no_grad():

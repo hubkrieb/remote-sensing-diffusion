@@ -21,8 +21,8 @@ def train(model, epochs, train_dataloader, val_dataloader, criterion, optimizer,
         train_loss = 0
         for image, mask in train_dataloader:
             optimizer.zero_grad()
-            image = image.permute(0, 3, 1, 2).to(device)
-            mask = mask.permute(0, 3, 1, 2).to(device)
+            image = image.to(device)
+            mask = mask.to(device)
             output = model(image)
             loss = criterion(output, mask)
             loss.backward()
@@ -54,8 +54,8 @@ def evaluate(model, dataloader, criterion, device):
 
     with torch.no_grad():
         for image, mask in dataloader:
-            image = image.permute(0, 3, 1, 2).to(device)
-            mask = mask.permute(0, 3, 1, 2).to(device)
+            image = image.to(device)
+            mask = mask.to(device)
             output = model(image)
             loss = criterion(output, mask)
             pred = output > 0.5
