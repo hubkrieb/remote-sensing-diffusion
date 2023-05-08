@@ -37,6 +37,8 @@ def load_checkpoint(checkpoint_path, model, optimizer):
 
 def plot_prediction(model, image, mask, device):
 
+    batch_size = image.shape[0]
+
     model = model.to(device)
     image = image.to(device)
     mask = mask.to(device)
@@ -50,15 +52,15 @@ def plot_prediction(model, image, mask, device):
         image = image.cpu()
         mask = mask.cpu()
 
-    fig, ax = plt.subplots(1, 3, figsize = (10, 30))
+    fig, ax = plt.subplots(batch_size, 3, figsize = (20, 60))
+    for i in range(batch_size):
+        ax[i, 0].set_title('Image')
+        ax[i, 1].set_title('Mask')
+        ax[i, 2].set_title('Prediction')
 
-    ax[0].set_title('Image')
-    ax[1].set_title('Mask')
-    ax[2].set_title('Prediction')
-
-    ax[0].imshow(image[0].permute(1, 2, 0))
-    ax[1].imshow(mask[0].permute(1, 2, 0))
-    ax[2].imshow(pred[0].permute(1, 2, 0))
+        ax[i, 0].imshow(image[i].permute(1, 2, 0))
+        ax[i, 1].imshow(mask[i].permute(1, 2, 0))
+        ax[i, 2].imshow(pred[i].permute(1, 2, 0))
 
     plt.axis('off')
     plt.show()
