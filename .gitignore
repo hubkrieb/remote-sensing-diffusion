@@ -2,3 +2,9 @@ wandb/
 dataset/
 checkpoints/
 __pycache__/
+*.png
+*.tif
+*.json
+*.bin
+*.safetensors
+*.pt
