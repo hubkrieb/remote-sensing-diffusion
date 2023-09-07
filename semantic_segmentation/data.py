@@ -1,17 +1,9 @@
 import os
-import sys
 import torch
 from torch.utils import data
 import csv
 import lmdb
 import torch
-import numpy as np
-
-current = os.path.dirname(os.path.realpath('__file__'))
-parent = os.path.dirname(current)
-sys.path.append(parent)
-
-import utils
 
 class SegmentationDataset(data.Dataset):
         def __init__(self, db_path, split_path, split, n_channels = 3):

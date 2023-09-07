@@ -15,7 +15,7 @@ def convert(input_path, output_path, profile_path, dsize):
         channel_image[..., 5] = g
         channel_image[..., 1] = b
         channel_image = channel_image.transpose((2, 0, 1))
-        background_name = input_name.split('-init')[0] + '.tif'
+        background_name = input_name.split('-')[0] + '.tif'
         profile = rasterio.open(os.path.join(profile_path, background_name)).profile
         new_dataset = rasterio.open(
         os.path.join(output_path, input_name.split('.')[0] + '.tif'),

@@ -4,6 +4,7 @@ from torchvision.transforms.functional import to_pil_image
 from utils import get_img_arr, get_mask_arr
 
 def convert(input_path, output_path, image):
+    assert image in ['background', 'mask'], f'{image} is not a valid value for the image argument'
     inputs = os.listdir(input_path)
     for input_name in inputs:
         if image == 'mask':
