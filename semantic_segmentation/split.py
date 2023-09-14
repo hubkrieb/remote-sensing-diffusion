@@ -50,7 +50,7 @@ def split_data(input_path, mask_path, output_path):
     inputs = np.array((inputs, fire_pixels)).T
     np.savetxt(os.path.join(output_path, 'fire_pixels.csv'), inputs, delimiter = ',', fmt = '%s')
 
-    train_dataset, val_dataset, test_dataset = data.random_split(dataset, [0.7, 0.2, 0.1])
+    train_dataset, val_dataset, test_dataset = data.random_split(dataset, [0.7, 0.3, 0])
 
     train_inputs = inputs[train_dataset.indices]
     val_inputs = inputs[val_dataset.indices]
