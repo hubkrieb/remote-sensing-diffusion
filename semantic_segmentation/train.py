@@ -41,7 +41,7 @@ def train(model, epochs, train_dataloader, val_dataloader, criterion, optimizer,
             
         train_loss /= len(train_dataloader)
         
-        if (epoch + 1) % checkpoint_interval == 0:
+        if epoch % checkpoint_interval == 0:
             val_loss, iou, dice, acc, prec, rec = evaluate(model, val_dataloader, criterion, device)
             wandb.log({'Training Loss' : train_loss, 'Validation Loss' : val_loss, 'IoU' : iou, 'Dice Coefficient' : dice, 'Pixel Accuracy' : acc, 'Precision' : prec, 'Recall' : rec, 'epoch' : epoch + 1})
             utils.save_checkpoint(model, optimizer, epoch + 1, checkpoint_dir)

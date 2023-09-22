@@ -29,10 +29,10 @@ if __name__ == '__main__':
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-    train_dataloader = data.get_dataloader(lmdb_path, n_channels, batch_size, split_path, 'train', True)
+    train_dataloader = data.get_dataloader(lmdb_path, n_channels, batch_size, split_path, 'train', False)
     val_dataloader = data.get_dataloader(lmdb_path, n_channels, batch_size, split_path, 'val', False)
     test_dataloader = data.get_dataloader(lmdb_path, n_channels, batch_size, split_path, 'test', False)
-
+    torch.manual_seed(187)
     unet = model.Unet(n_channels)
 
     criterion = nn.BCELoss()
