@@ -17,15 +17,20 @@ def clip_image_similarity(image1_path, image2_path, model, preprocess, device):
 
     return similarity
 
-def average_similarity(image_path, references_path, model, preprocess, device):
+def average_similarity(images_path, references_path, device, verbose = False):
     
     model, preprocess = clip.load('ViT-B/32', device=device)
 
     avg_score = 0
-
-    for reference in os.listdir(references_path):
-        score = clip_image_similarity(image_path, os.path.join(references_path, reference), model, preprocess, device)
-        avg_score += score
-    avg_score /= len(os.listdir(references_path))
+    for image in os.listdir(images_path):
+        img_avg_score = 0
+        for reference in os.listdir(references_path):
+            score = clip_image_similarity(os.path.join(images_path, image), os.path.join(references_path, reference), model, preprocess, device)
+            img_avg_score += score
+        img_avg_score /= len(os.listdir(references_path))
+        if verbose:
+            print(f'Average score for image {image} :', img_avg_score)
+        avg_score += img_avg_score
+    avg_score /= len(os.listdir(images_path))
 
     return avg_score
