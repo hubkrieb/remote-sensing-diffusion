@@ -33,6 +33,7 @@ if __name__ == '__main__':
     val_dataloader = data.get_dataloader(lmdb_path, n_channels, batch_size, split_path, 'val', False)
     test_dataloader = data.get_dataloader(lmdb_path, n_channels, batch_size, split_path, 'test', False)
     torch.manual_seed(187)
+    torch.backends.cudnn.deterministic = True
     unet = model.Unet(n_channels)
 
     criterion = nn.BCELoss()
