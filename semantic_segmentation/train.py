@@ -88,8 +88,8 @@ def evaluate(model, dataloader, criterion, device):
         
         val_loss /= len(dataloader)
         acc /= len(dataloader)
-        prec /= len(dataloader)
-        rec /= len(dataloader)
+        prec /= non_zero_fp
+        rec /= non_zero_fp
         iou /= non_zero_fp
         dice /= non_zero_fp
 
