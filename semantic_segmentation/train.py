@@ -77,13 +77,13 @@ def evaluate(model, dataloader, criterion, device):
             pred = output > 0.5
             val_loss += loss.item()
             acc += metrics.pixel_accuracy(pred, mask).item()
-            prec += precision_metric(pred, mask).item()
-            rec += recall_metric(pred, mask).item()
 
             # IoU and Dice score are not defined when the target is zeros
             if mask.sum() > 0:
                 iou += iou_metric(pred, mask).item()
                 dice += metrics.dice_coeff(pred, mask).item()
+                prec += precision_metric(pred, mask).item()
+                rec += recall_metric(pred, mask).item()
                 non_zero_fp += 1
         
         val_loss /= len(dataloader)
