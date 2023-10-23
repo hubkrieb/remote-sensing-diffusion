@@ -6,6 +6,10 @@ import argparse
 import utils
 
 def write_lmdb(image_folder, mask_folder, lmdb_path):
+    
+    if not os.path.exists(lmdb_path):
+        os.makedirs(lmdb_path)
+
     # Set up LMDB environment
     env = lmdb.open(lmdb_path, map_size = int(2e10))
     txn = env.begin(write=True)
