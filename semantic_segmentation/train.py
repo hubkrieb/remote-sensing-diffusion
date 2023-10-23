@@ -1,14 +1,8 @@
 import os
-import sys
 import metrics
 import torch
 import wandb
 from torchmetrics.classification import BinaryJaccardIndex, BinaryPrecision, BinaryRecall
-
-current = os.path.dirname(os.path.realpath('__file__'))
-sys.path.append(current)
-
-import utils
 
 def train(model, epochs, train_dataloader, val_dataloader, criterion, optimizer, checkpoint_interval, checkpoint_dir, device):
     
@@ -44,7 +38,7 @@ def train(model, epochs, train_dataloader, val_dataloader, criterion, optimizer,
         if epoch % checkpoint_interval == 0:
             val_loss, iou, dice, acc, prec, rec = evaluate(model, val_dataloader, criterion, device)
             wandb.log({'Training Loss' : train_loss, 'Validation Loss' : val_loss, 'IoU' : iou, 'Dice Coefficient' : dice, 'Pixel Accuracy' : acc, 'Precision' : prec, 'Recall' : rec, 'epoch' : epoch + 1})
-            utils.save_checkpoint(model, optimizer, epoch + 1, checkpoint_dir)
+            save_checkpoint(model, optimizer, epoch + 1, checkpoint_dir)
             print('Epoch : {} | Train. Loss : {:.4f} | Val. Loss : {:.4f} | IoU : {:.4f} | Dice Coef. : {:.4f} | Pixel Acc. {:.4f} | Precision {:.4f} | Recall {:.4f}'.format(epoch + 1, train_loss, val_loss, iou, dice, acc, prec, rec))
         else:
             wandb.log({'Training Loss' : train_loss, 'epoch' : epoch + 1})
@@ -95,4 +89,18 @@ def evaluate(model, dataloader, criterion, device):
 
     return val_loss, iou, dice, acc, prec, rec
 
+def save_checkpoint(model, optimizer, epoch, checkpoint_dir):
 
+    checkpoint = {'epoch' : epoch, 'state_dict' : model.state_dict(), 'optimizer' : optimizer.state_dict()}
+    checkpoint_path = os.path.join(checkpoint_dir, f'checkpoint{epoch}.pt')
+    if not os.path.exists(checkpoint_dir):
+        os.mkdir(checkpoint_dir)
+    torch.save(checkpoint, checkpoint_path)
+
+def load_checkpoint(checkpoint_path, model, optimizer):
+
+    checkpoint = torch.load(checkpoint_path)
+    model.load_state_dict(checkpoint['state_dict'])
+    optimizer.load_state_dict(checkpoint['optimizer'])
+    epoch = checkpoint['epoch'] - 1
+    return model, optimizer, epoch

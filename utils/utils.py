@@ -19,22 +19,6 @@ def get_mask_arr(path):
     seg = np.float32(img)
     return torch.from_numpy(seg)
 
-def save_checkpoint(model, optimizer, epoch, checkpoint_dir):
-
-    checkpoint = {'epoch' : epoch, 'state_dict' : model.state_dict(), 'optimizer' : optimizer.state_dict()}
-    checkpoint_path = os.path.join(checkpoint_dir, f'checkpoint{epoch}.pt')
-    if not os.path.exists(checkpoint_dir):
-        os.mkdir(checkpoint_dir)
-    torch.save(checkpoint, checkpoint_path)
-
-def load_checkpoint(checkpoint_path, model, optimizer):
-
-    checkpoint = torch.load(checkpoint_path)
-    model.load_state_dict(checkpoint['state_dict'])
-    optimizer.load_state_dict(checkpoint['optimizer'])
-    epoch = checkpoint['epoch'] - 1
-    return model, optimizer, epoch
-
 def plot_prediction(model, image, mask, device):
 
     batch_size = image.shape[0]

@@ -4,11 +4,9 @@ import cv2
 import rasterio
 import numpy as np
 
-def convert(input_path, output_path, profile_path, dsize):
+def convert(input_path, output_path, profile_path):
     for input_name in os.listdir(input_path):
         input = cv2.imread(os.path.join(input_path, input_name))
-        if dsize:
-            input = cv2.resize(input, (dsize, dsize))
         b, g, r = cv2.split(input)
         channel_image = np.zeros((input.shape[0], input.shape[1], 10), dtype=np.int32)
         channel_image[..., 6] = r
@@ -28,15 +26,13 @@ def convert(input_path, output_path, profile_path, dsize):
 if __name__ == '__main__':
     
     parser = argparse.ArgumentParser()
-    parser.add_argument('--input_path', required = True)
-    parser.add_argument('--output_path', required = True)
-    parser.add_argument('--profile_path', required = True)
-    parser.add_argument('--size', required = False)
+    parser.add_argument('--input_path', required = True, help = 'Path to the directory containing the PNG images to convert')
+    parser.add_argument('--output_path', required = True, help = 'Path to the directory the TIF outputs will be stored')
+    parser.add_argument('--profile_path', required = True, help = 'Path to the directory containing the original background profile (the original dataset landsat_patches directory)')
     args = parser.parse_args()
 
     input_path = args.input_path
     output_path = args.output_path
     profile_path = args.profile_path
-    size = args.size
 
-    convert(input_path, output_path, profile_path, size)
+    convert(input_path, output_path, profile_path)

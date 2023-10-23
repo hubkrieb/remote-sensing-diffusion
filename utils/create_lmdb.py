@@ -3,10 +3,6 @@ import sys
 import os
 import numpy as np
 import argparse
-
-current = os.path.dirname(os.path.realpath('__file__'))
-sys.path.append(current)
-
 import utils
 
 def write_lmdb(image_folder, mask_folder, lmdb_path):
@@ -43,9 +39,9 @@ def write_lmdb(image_folder, mask_folder, lmdb_path):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--background_path', required = True)
-    parser.add_argument('--mask_path', required = True)
-    parser.add_argument('--output_path', required = True)
+    parser.add_argument('--background_path', required = True, help = 'Path to the directory containing the backgrounds')
+    parser.add_argument('--mask_path', required = True, help = 'Path to the directory containing the masks')
+    parser.add_argument('--output_path', required = True, help = 'Path to the directory to store the lmdb database')
     args = parser.parse_args()
 
     background_path = args.background_path
