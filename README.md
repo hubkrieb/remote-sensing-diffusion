@@ -8,7 +8,7 @@ Add figure intro
 
 ## Dataset
 
-We use the manually annotated dataset of active fire detection created by de Almeida Pereira et al. available [here](https://github.com/pereira-gha/activefire). It consists of 13 Landsat-8 images captured in September 2020 from different location around the world. They were split into 9,044 256$$\times$$256 pixels non-overlapping patches. To simplify the image synthesis, we restrict the data to the RGB visible bands.
+We use the manually annotated dataset of active fire detection created by de Almeida Pereira et al. available [here](https://github.com/pereira-gha/activefire). It consists of 13 Landsat-8 images captured in September 2020 from different location around the world. They were split into 9,044 256x256 pixels non-overlapping patches. To simplify the image synthesis, we restrict the data to the RGB visible bands.
 
 ## Installing Dependencies
 
@@ -33,7 +33,14 @@ To generate synthetic data we use a modified version of Automatic1111 Stable Dif
 Provided synthetic images and the corresponding masks in tif format (you can use png_to_tif.py to convert them), you can generate an augmented dataset using augment.py.
 
 ```bash
-python data_augmentation/augment.py --input_path path_to_synthetic_images --output_path path_to_augmented_dataset_landsat_patches --mask_path path_to_inpainting_masks --output_mask_path path_to_augmented_dataset_masks --original_image_path path_to_original_dataset_landsat_patches --original_mask_path path_to_original_dataset_manual_annotations_patches --split_path path_to_original_dataset_split --output_split_path path_to_augmented_dataset_split
+python data_augmentation/augment.py \
+--input_path path_to_synthetic_images \
+--output_path path_to_augmented_dataset_landsat_patches \
+--mask_path path_to_inpainting_masks \
+--output_mask_path path_to_augmented_dataset_masks \
+--original_image_path path_to_original_dataset_landsat_patches \
+--original_mask_path path_to_original_dataset_manual_annotations_patches \
+--split_path path_to_original_dataset_split --output_split_path path_to_augmented_dataset_split
 ```
 
 ## Training Semantic Segmentation U-Net
@@ -41,11 +48,21 @@ python data_augmentation/augment.py --input_path path_to_synthetic_images --outp
 Before training the model on a given dataset, you need to create the lmdb files by running create_lmdb.py.
 
 ```bash
-python utils/create_lmdb.py --background_path path_to_dataset_landsat_patches --mask_path path_to_dataset_manual_annotations_patches --output_path path_to_dataset_lmdb
+python utils/create_lmdb.py \
+--background_path path_to_dataset_landsat_patches \
+--mask_path path_to_dataset_manual_annotations_patches \
+--output_path path_to_dataset_lmdb
 ```
 
 You can then run the training.
 
 ```bash
-python semantic_segmentation/run.py --epochs 200 --batch_size 8 --n_channels 3 --checkpoint_interval 10 --checkpoint_path path_to_checkpoints --lmdb_path path_to_lmdb_dir --split_path path_to_split
+python semantic_segmentation/run.py \
+--epochs 200 \
+--batch_size 8 \
+--n_channels 3 \
+--checkpoint_interval 10 \
+--checkpoint_path path_to_checkpoints \
+--lmdb_path path_to_lmdb_dir \
+--split_path path_to_split
 ```
