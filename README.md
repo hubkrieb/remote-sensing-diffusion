@@ -40,7 +40,8 @@ python data_augmentation/augment.py \
 --output_mask_path path_to_augmented_dataset_masks \
 --original_image_path path_to_original_dataset_landsat_patches \
 --original_mask_path path_to_original_dataset_manual_annotations_patches \
---split_path path_to_original_dataset_split --output_split_path path_to_augmented_dataset_split \
+--split_path path_to_original_dataset_split \
+--output_split_path path_to_augmented_dataset_split \
 --lmdb_path path_to_lmdb
 ```
 
