@@ -40,21 +40,13 @@ python data_augmentation/augment.py \
 --output_mask_path path_to_augmented_dataset_masks \
 --original_image_path path_to_original_dataset_landsat_patches \
 --original_mask_path path_to_original_dataset_manual_annotations_patches \
---split_path path_to_original_dataset_split --output_split_path path_to_augmented_dataset_split
+--split_path path_to_original_dataset_split --output_split_path path_to_augmented_dataset_split \
+--lmdb_path path_to_lmdb
 ```
 
 ## Training Semantic Segmentation U-Net
 
-Before training the model on a given dataset, you need to create the lmdb files by running create_lmdb.py.
-
-```bash
-python utils/create_lmdb.py \
---background_path path_to_dataset_landsat_patches \
---mask_path path_to_dataset_manual_annotations_patches \
---output_path path_to_dataset_lmdb
-```
-
-You can then run the training.
+Once you have a ready-to-use LMDB database, you can train the U-Net model.
 
 ```bash
 python semantic_segmentation/run.py \

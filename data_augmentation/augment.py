@@ -9,11 +9,13 @@ sys.path.append(current)
 
 from utils.utils import get_mask_arr
 
+from utils.create_lmdb import write_lmdb
+
 def augment(input_path, output_path, mask_path, output_mask_path, original_image_path, original_mask_path, split_path, output_split_path):   
-    print('Copying original dataset')
-    #shutil.copytree(original_image_path, output_path)
-    #shutil.copytree(original_mask_path, output_mask_path)
-    print('Adding synthetic data')
+    print('Copying original dataset...')
+    shutil.copytree(original_image_path, output_path)
+    shutil.copytree(original_mask_path, output_mask_path)
+    print('Adding synthetic data...')
     train = pd.read_csv(os.path.join(split_path, 'train.csv'), index_col = None, header = None)
     for input_name in os.listdir(input_path):
         mask_name = input_name.split('-')[1]
@@ -39,6 +41,7 @@ if __name__ == '__main__':
     parser.add_argument('--original_mask_path', help = 'Path to the original dataset masks')
     parser.add_argument('--split_path', help = 'Path to the original dataset split')
     parser.add_argument('--output_split_path', help = 'Path to the augmented dataset split')
+    parser.add_argument('--lmdb_path', help = 'Path to where the LMDB database will be created')
     args = parser.parse_args()
 
     input_path = args.input_path
@@ -49,5 +52,8 @@ if __name__ == '__main__':
     original_mask_path = args.original_mask_path
     split_path = args.split_path
     output_split_path = args.output_split_path
+    lmdb_path = args.lmdb_path
 
     augment(input_path, output_path, mask_path, output_mask_path, original_image_path, original_mask_path, split_path, output_split_path)
+    print('Creating LMDB...')
+    write_lmdb(output_path, output_mask_path, lmdb_path)
