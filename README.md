@@ -18,7 +18,7 @@ pip install -r requirements.txt
 
 ## Finetuning Stable Diffusion Inpainting with Dreambooth
 
-To finetune Stable Diffusion Inpainting you can use the inpainting_fintenuning.ipynb file, preferably run it using Google Colab. It uses the following [repository](https://github.com/huggingface/diffusers/tree/main/examples/research_projects/dreambooth_inpaint) to finetune the model. We use Google Drive to store training images and model checkpoints and connect the notebook to it. 
+To finetune Stable Diffusion Inpainting you can use the [inpainting_fintenuning.ipynb](https://github.com/hubkrieb/remote-sensing-diffusion/blob/master/data_augmentation/inpainting_finetuning.ipynb) file, preferably run it using Google Colab. It uses the following [repository](https://github.com/huggingface/diffusers/tree/main/examples/research_projects/dreambooth_inpaint) to finetune the model. We use Google Drive to store training images and model checkpoints and connect the notebook to it. 
 
 <a target="_blank" href="https://colab.research.google.com/github/hubkrieb/remote-sensing-diffusion/blob/master/data_augmentation/inpainting_finetuning.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
@@ -26,11 +26,11 @@ To finetune Stable Diffusion Inpainting you can use the inpainting_fintenuning.i
 
 ## Generating Synthetic Data
 
-To generate synthetic data we use a modified version of Automatic1111 Stable Diffusion WebUI that allows to generate a synthetic image for each pair of background and mask in batch mode. 
+To generate synthetic data we use a modified version of [Automatic1111 Stable Diffusion WebUI](https://github.com/AUTOMATIC1111/stable-diffusion-webui) that allows to generate a synthetic image for each pair of background and mask in batch mode. 
 
 ## Data Augmentation
 
-Provided synthetic images and the corresponding masks in tif format (you can use png_to_tif.py to convert them), you can generate an augmented dataset using augment.py.
+Provided synthetic images and the corresponding masks in tif format (you can use [png_to_tif.py](https://github.com/hubkrieb/remote-sensing-diffusion/blob/master/utils/png_to_tif.py) to convert them), you can generate an augmented dataset using [augment.py](https://github.com/hubkrieb/remote-sensing-diffusion/blob/master/data_augmentation/augment.py).
 
 ```bash
 python data_augmentation/augment.py \
