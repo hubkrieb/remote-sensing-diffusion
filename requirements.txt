@@ -1,4 +1,4 @@
-clip==1.0
+openai-clip==1.0
 matplotlib==3.5.2
 numpy==1.22.4
 opencv_python==4.5.5.62
@@ -8,3 +8,4 @@ safetensors==0.3.2
 torch==1.13.1+cu116
 torchmetrics==0.11.0
 torchvision==0.14.1+cu116
+wandb==0.13.5

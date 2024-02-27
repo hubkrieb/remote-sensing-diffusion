@@ -1,4 +1,5 @@
 wandb/
+venv/
 dataset/
 checkpoints/
 __pycache__/
